@@ -63,7 +63,7 @@ export default class recuperaCuenta extends React.Component {
             <React.Fragment>
                 {contenido}
 
-               {/*  <MDBBtn gradient="peach" name="n_cuenta" value="650" onClick={this.handleClik}>Peach</MDBBtn>
+               {/*<MDBBtn gradient="peach" name="n_cuenta" value="650" onClick={this.handleClik}>Peach</MDBBtn>
                 <MDBBtn gradient="purple" name="n_codigo" value="655" onClick={this.handleClik}>Purple</MDBBtn>
                 <MDBBtn gradient="blue" name="n_pass" value="660" onClick={this.handleClik}>Blue</MDBBtn>
                  <MDBBtn gradient="aqua" name="" value="654" onClick={this.handleClik}>Aqua</MDBBtn>*/}

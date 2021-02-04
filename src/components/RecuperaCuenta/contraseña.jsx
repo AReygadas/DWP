@@ -24,14 +24,14 @@ export default class contraseña extends React.Component{
             let res = await fetch('http://35.167.62.109/storeutags/security/update_password',config)
             let json = await res.json()
             console.log(json)
-            swal({
+            swal({ //
                 title:"Actualizado",
                 text: "Contraseña actualizada con exito!!",
                 icon: "success",
                 buttons: "Aceptar",
                }).then(respuesta=>{
                   window.location.href = "/login";
-            })
+            })//
         }
         catch(error){
             console.log(error)

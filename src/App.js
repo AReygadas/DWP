@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import Layout from './Layout';
-import Home from './pages/Home';
-import LogIn from './pages/LogIn';
-import SingUp from './pages/SingUp';
-
+import React, { Component } from "react"
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import Layout from './Layout'
+import Home from './pages/Home'
+import LogIn from './pages/LogIn'
+import SingUp from './pages/SingUp'
+import RecuperaPass from './pages/RecuperaCuenta'
 
 class App extends Component {
   render() {
@@ -13,6 +13,7 @@ class App extends Component {
       <BrowserRouter>
         <Layout>
           <Switch>
+            <Route exact path ="/recupera" component ={RecuperaPass } />
             <Route exact path = "/SingUp" component = {SingUp} /> 
             <Route exact path = "/login" component = {LogIn} /> 
             <Route exact path = "/" component = {Home} /> 

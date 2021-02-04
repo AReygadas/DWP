@@ -32,8 +32,6 @@ export default class Home extends React.Component {
             }  
             let res = await fetch('http://35.167.62.109/storeutags/security/create_account',config)
             let json = await res.json()
-
-          
           swal({
               title:"Usuario Registrado",
               text: "Recibirás un correo con la confirmación del registro",

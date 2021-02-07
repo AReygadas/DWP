@@ -1,16 +1,18 @@
 import React from 'react';
+import Navbar from '../src/components/Navbar/Navbar';
+import './index.css';
 
-import Navbar from './components/Navbar/Navbar';
 
 function Layout(props) {
-  // const children = props.children;
-
-  return (
-    <React.Fragment>
+  //const children = props.children;
+return (
+    <React.Fragment>  
+      <div className="bg">
       <Navbar />
       {props.children}
+
+      </div>
     </React.Fragment>
   );
 }
-
 export default Layout;

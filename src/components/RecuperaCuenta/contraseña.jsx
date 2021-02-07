@@ -1,17 +1,37 @@
 import React from 'react'
-import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon, MDBInput } from 'mdbreact';
-import swal from 'sweetalert';
+import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon, MDBInput, MDBCard, MDBCardBody } from 'mdbreact'
+import swal from 'sweetalert'
+import Swal2 from 'sweetalert2'
 
 export default class contraseña extends React.Component{
+    
+    validaPass =e=> {
+        console.log(e)
+        e.preventDefault()
+        if (this.props.formValues.n_pass1 === this.props.formValues.n_pass2) {
+            this.handleSubmit()
+        }else{
+
+          
+            swal({
+                title:"Error",
+                text: "Passwords do not match",
+                icon: "warning",
+                buttons: "Ok",
+               
+               }) 
+        }
+    }
 
     handleSubmit= async e => {
+        
         let data = {
             email:this.props.formValues.n_cuenta,
             recovery_code:this.props.formValues.n_codigo,
             password:this.props.formValues.n_pass1,
             password_confirmation:this.props.formValues.n_pass2
         }
-        e.preventDefault()
+      
         try{
             let config = {
                 method: 'POST',
@@ -24,14 +44,24 @@ export default class contraseña extends React.Component{
             let res = await fetch('http://35.167.62.109/storeutags/security/update_password',config)
             let json = await res.json()
             console.log(json)
-            swal({
-                title:"Actualizado",
-                text: "Contraseña actualizada con exito!!",
-                icon: "success",
-                buttons: "Aceptar",
-               }).then(respuesta=>{
-                  window.location.href = "/login";
-            })
+            if(json.status==="success"){
+                swal({
+                    title:"Updated",
+                    text: "The password was updated successfully",
+                    icon: "success",
+                    buttons: "Ok",
+                   }).then(respuesta=>{
+                      window.location.href = "/login";
+                })
+            }else{
+                swal({
+                    title:"Error",
+                    text: "An error has occurred!! - "+json.error_code,
+                    icon: "error",
+                    buttons: "Ok",
+                   })
+            }
+            
         }
         catch(error){
             console.log(error)
@@ -41,45 +71,50 @@ export default class contraseña extends React.Component{
     render(){
         return(
            <MDBContainer>
-                <MDBRow>
-                    <MDBCol md="6">
-                    <form onSubmit={this.handleSubmit}>
-                        <div>
-                            <p className="h5 text-center mb-4">Haz recibido un correo con un código de verificación revisa tu correo!!</p>
-                        </div>
-                        <MDBRow>
-                        <MDBCol sm="4">
-                        <div className="grey-text">
-                            <MDBInput 
-                                name="n_pass1"
-                                label="Contraseña" 
-                                icon="key" 
-                                group 
-                                type="password" 
-                                validate error="wrong" 
-                                success="right" 
-                                onChange={this.props.onChange}
-                            />
-                            <MDBInput 
-                                name="n_pass2"
-                                label="Repite Contraseña" 
-                                icon="key" 
-                                group 
-                                type="password" 
-                                validate error="wrong" 
-                                success="right" 
-                                onChange={this.props.onChange}
-                            />
-                         </div>
-                        </MDBCol>
-                        </MDBRow>
-                        <div className="text-center">
-                        <MDBBtn type="submit" outline color="info" >
-                            Enviar
-                            <MDBIcon far icon="paper-plane" className="ml-1" />
-                        </MDBBtn>
-                        </div>
-                    </form>
+               <br></br>
+                <MDBRow center> 
+                    <MDBCol md="4">
+                        <MDBCard>
+                            <MDBCardBody>
+                                <form onSubmit={this.validaPass}>
+                                    <div>
+                                        <p className="h5 text-center mb-4">Enter your new password !!</p>
+                                    </div>
+                                    <MDBRow>
+                                    <MDBCol>
+                                    <div className="grey-text">
+                                        <MDBInput
+                                            name="n_pass1"
+                                            label="Password" 
+                                            icon="key" 
+                                            group 
+                                            type="password" 
+                                            validate error="wrong" 
+                                            success="right" 
+                                            onChange={this.props.onChange}
+                                        />
+                                        <MDBInput 
+                                            name="n_pass2"
+                                            label="Confirm Password" 
+                                            icon="key" 
+                                            group 
+                                            type="password" 
+                                            validate error="wrong" 
+                                            success="right" 
+                                            onChange={this.props.onChange}
+                                        />
+                                    </div>
+                                    </MDBCol>
+                                    </MDBRow>
+                                    <div className="text-center">
+                                    <MDBBtn type="submit" outline color="info" >
+                                        Send
+                                        <MDBIcon far icon="paper-plane" className="ml-1" />
+                                    </MDBBtn>
+                                    </div>
+                                </form>
+                            </MDBCardBody>       
+                        </MDBCard>
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>

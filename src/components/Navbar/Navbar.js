@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+
+ import React, { Component } from "react";
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, 
 MDBNavbarToggler, MDBCollapse, MDBDropdown,
 MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBContainer, MDBIcon } from "mdbreact";
@@ -15,10 +16,16 @@ toggleCollapse = collapseID => () =>
 
 render() {
   return (
-    <MDBContainer>
-      <MDBNavbar color="info-color" dark expand="md" style={{ marginTop: "20px" }}>
+      <MDBNavbar color="primary-color"
+      dark
+      expand="md"
+      fixed="top"
+      scrolling
+      transparent>
         <MDBNavbarBrand>
-          <strong className="white-text">MDBNavbar</strong>
+          <MDBNavLink className="waves-effect waves-light" to="/">
+               <strong className="white-text">Home</strong></MDBNavLink>
+         
         </MDBNavbarBrand>
         <MDBNavbarToggler onClick={this.toggleCollapse("navbarCollapse3")} />
         <MDBCollapse id="navbarCollapse3" isOpen={this.state.collapseID} navbar>
@@ -45,7 +52,6 @@ render() {
           </MDBNavbarNav>
         </MDBCollapse>
       </MDBNavbar>
-      </MDBContainer>
     );
   }
 }

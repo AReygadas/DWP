@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
@@ -9,7 +9,7 @@ import { DataProvider } from './Context'
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
-
+   //Cubrimos la aplicacion con el DataProvider para pasarle todos las variables a todos los elementos
      <DataProvider>
         <App /> 
      </DataProvider>,

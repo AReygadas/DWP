@@ -1,83 +1,147 @@
-import React, { createContext, useState, Redirect } from 'react'
-
-export const DataContext = createContext()
-
+//Clase que maneja las variables globales y el Session Storage
+import React, { createContext, useState } from "react";
+//Creo el contexto
+export const DataContext = createContext();
+//Funcion del contexto
 export const DataProvider = ({ children }) => {
-
-    const sessionValidate = async e =>{
-        let status = false
-        let id = {'session_id':window.sessionStorage.getItem('session_id')}
-        try{
-            let config = {
-                method: 'POST',
-                headers: {
-                    'Accept':'application/json',
-                    'Content-Type': 'application/json'                    
-                }, body: JSON.stringify(id)
-            }  
-            let res = await fetch('http://35.167.62.109/storeutags/security/ping',config)
-            let json = await res.json()
-         console.log(json)
-            if(json.status==="success"){
-                status = true
-                    console.log(status+'-uno')   
-                 swal({
-                    title:"Welcome!!",
-                    text: json.data.customer.full_name,
-                    icon: "info",
-                    buttons: "Ok",
-                   }).then(respuesta=>{
-                            
-                    
-                })
-            }else{
-                swal({
-                    title:"Error",
-                    text: "An error has occurred!! - "+json.error_code,
-                    icon: "error",
-                    buttons: "Ok",
-                })               
-            }            
-        }
-        catch(error){
-            console.log(error)
-        }     
-        console.log(status)  
-        setIsAuth(status)
+  // llamada al ping de la API
+  const sessionValidate = async (e) => {
+    let status = false; // Controla el estatus de logueo del usuario
+    //asigno a una variable la session del Session Storage
+    let id;
+    if (IsChek) {
+      console.log(IsChek);
+      id = { session_id: window.localStorage.getItem("session_id") };
+    } else {
+      console.log(IsChek);
+      id = { session_id: window.sessionStorage.getItem("session_id") };
     }
-   
-    const [ IsAuth, setIsAuth] = useState( () => {
-           
-          return sessionValidate()
-        //hasta aqui me quedo hay que verificar si el id esta vigente.
-    })
-    const [ name, setName ] = useState(() => {
-        return window.sessionStorage.getItem('full_name')
-    })
 
-    const value ={
-        name,
-        activateName:nam => {
-            setName(nam)
-            return window.sessionStorage.setItem('full_name', nam)
+    try {
+      //Configuracion para la peticion
+      let config = {
+        method: "POST", //metodo de la llamada a la API
+        headers: {
+          //Headers de la llamada estos nunca cambian
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
-        IsAuth,
-        activateAuth:session_id => {
-            setIsAuth(true)
-            window.sessionStorage.setItem('session_id', session_id)
-        },        
-        removeAuth:()=> {
-            setIsAuth(false)
-            window.sessionStorage.removeItem('session_id')
-            window.sessionStorage.removeItem('full_name')
-        }
+        body: JSON.stringify(id), //contenido json de la llamada. {"session_id":"654654894321" }
+      };
+      // Fetch de la llamada a la API
+      let res = await fetch(
+        "http://35.167.62.109/storeutags/security/ping",
+        config
+      );
+      //Recibes la respuesta del fetch con los datos.
+      let json = await res.json();
+      //Imprime Json en consola
+      console.log(json);
+      // Valida si la respuesta fue exitosa
+      if (json.status === "success") {
+        //Cambia el estatus de logueo del usuario
+        status = true;
+        //Ventana modal con el mensaje de confirmacion
+        swal({
+          title: "Welcome!!",
+          text: json.data.customer.full_name,
+          icon: "info",
+          buttons: "Ok",
+        });
+      } else {
+        //Enb caso de que la api mande mensaje de error regresa el modal de error
+        swal({
+          title: "Error",
+          text: "An error has occurred!! - " + json.error_code,
+          icon: "error",
+          buttons: "Ok",
+        });
+      }
+    } catch (error) {
+      //Atrapa cualquier error no controlado por la api
+      //Imprime en consola el error
+      console.log(error);
     }
+    //Actualiza el estatus de logueo del usuario
+    setIsAuth(status);
+  };
 
-    return(
-        <DataContext.Provider value={value}>
-            { children }
-        </DataContext.Provider>
-    )
-}
+  //Hook para validar si se recordara al usuario
+  const [IsChek, setIsChek] = useState(() => {
+    if (window.localStorage.getItem("check") === null) {
+      return false;
+    } else {
+      return window.localStorage.getItem("check");
+    }
+  });
 
+  //Hook para controlar el estado del usuario
+  const [IsAuth, setIsAuth] = useState(() => {
+    //Aqui actualizas el estado del usuario.
+    if (localStorage.getItem("session_id") === null) {
+      console.log("wx,y,z");
+    } else {
+      return sessionValidate();
+    }
+  });
 
+  //Hook para controlar y tomar el nombre del usuario del SessionStorage
+  const [name, setName] = useState(() => {
+    //Regreso el valor del nombre del sessionStorage
+    if (IsChek) {
+      return window.localStorage.getItem("full_name");
+    } else {
+      return window.sessionStorage.getItem("full_name");
+    }
+  });
+
+  // Son la variables globales que vamos en la aplicacion
+  const value = {
+    //Variable del nombre de usuario
+    name,
+    //Metodo para guardar el nombre en sessionStorage
+    activateName: (nam) => {
+      setName(nam);
+      //Guarda el nombre en sessionSotage
+      if (IsChek) {
+        return window.localStorage.setItem("full_name", nam);
+      } else {
+        return window.sessionStorage.setItem("full_name", nam);
+      }
+    },
+    //Variable para validar si el usuario esta logueado
+    IsAuth,
+    //Metodo para guardar el session_id en sessionStorage
+    activateAuth: (session_id) => {
+      setIsAuth(true);
+      if (IsChek) {
+        return window.localStorage.setItem("session_id", session_id);
+      } else {
+        return window.sessionStorage.setItem("session_id", session_id);
+      }
+    },
+    //Metodo para cerrar sesion
+    removeAuth: () => {
+      //Cambia el estado del usuario a false
+      setIsAuth(false);
+      //Borra el sessionStorage
+      if (IsChek) {
+        window.localStorage.removeItem("session_id");
+        window.localStorage.removeItem("full_name");
+        window.localStorage.removeItem("check");
+      } else {
+        window.sessionStorage.removeItem("session_id");
+        window.sessionStorage.removeItem("full_name");
+        window.sessionStorage.removeItem("check");
+      }
+    },
+    IsChek,
+    acticateChek: (val) => {
+      setIsChek(val);
+      window.localStorage.setItem("check", val);
+    },
+  };
+
+  //regresamos el Data Provider que envuelve a la aplicacion
+  return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
+};

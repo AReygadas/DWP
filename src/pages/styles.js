@@ -17,3 +17,11 @@ export const Title = styled.h1`
   font-variant: normal;
   text-transform: none;
 `;
+
+export const Ddiv = styled.div`
+  padding: 1rem;
+  background-color: #33b5e5;
+  border: 2px solid #fff;
+  color: #fff;
+  text-align: center;
+`;

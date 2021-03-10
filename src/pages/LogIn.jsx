@@ -54,7 +54,10 @@ export const Login = () => {
         // y guardar la sesion en sessionStorage
         aut.activateAuth(json.data.session_id);
         aut.activateName(json.data.customer.full_name);
-        window.location = "/";
+        if (aut.IsChek) {
+          window.location = "/";
+        } else {
+        }
       } else {
         //manda el mensaje de error con de la API
         swal({

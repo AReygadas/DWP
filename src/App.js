@@ -10,6 +10,7 @@ import RecuperaPass from "./pages/RecuperaCuenta";
 import { DataContext } from "./Context";
 import { Login } from "./pages/LogIn";
 import EcommercePage from "./pages/ecomerce";
+import { Products } from "./pages/Products";
 //Clase que controla la navegacion en la app
 class App extends Component {
   //Permite consumir el Context con los datos globales
@@ -31,6 +32,7 @@ class App extends Component {
             <Layout>
               <Switch>
                 <Route exact path="/" component={EcommercePage} />
+                <Route exact path="/products" component={Products} />
               </Switch>
             </Layout>
           </BrowserRouter>
@@ -41,6 +43,7 @@ class App extends Component {
                 <Route exact path="/recupera" component={RecuperaPass} />
                 <Route exact path="/SingUp" component={SingUp} />
                 <Route exact path="/login" component={Login} />
+
                 <Route exact path="/" component={Home} />
                 {/* Pagina principal al cargar */}
               </Switch>

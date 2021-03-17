@@ -62,9 +62,9 @@ export const Login = () => {
         //manda el mensaje de error con de la API
         swal({
           title: "Error",
-          text: "An error has occurred!! - " + json.error_code,
+          text: "Ocurrio un error: !! - " + json.error_code,
           icon: "error",
-          buttons: "Ok",
+          buttons: "Continuar",
         });
       }
     } catch (error) {
@@ -92,10 +92,11 @@ export const Login = () => {
             <MDBCard>
               <MDBCardBody>
                 <form>
-                  <p className="h5 text-center mb-4">Sign in</p>
+                  <p className="h5 text-center mb-4">Iniciar sesion</p>
+                  <br />
                   <div className="grey-text">
                     <MDBInput
-                      label="Type your email"
+                      label="Correo electronico"
                       icon="envelope"
                       group
                       type="email"
@@ -105,7 +106,7 @@ export const Login = () => {
                       onChange={(e) => setEmail(e.target.value)}
                     />
                     <MDBInput
-                      label="Type your password"
+                      label="Contraseña"
                       icon="lock"
                       group
                       type="password"
@@ -125,7 +126,7 @@ export const Login = () => {
                     <label
                       className="custom-control-label"
                       htmlFor="defaultChecked2">
-                      Remember Me
+                      Recordarme
                     </label>
                   </div>
                   <br />
@@ -134,12 +135,12 @@ export const Login = () => {
 
                   <div className="text-center">
                     <Link to="/recupera">
-                      <p>Did you forget your password?</p>
+                      <p>No recuerdas tu contraseña?</p>
                     </Link>
                   </div>
                   <div className="text-center">
                     <MDBBtn gradient="blue" onClick={handleClik}>
-                      Login
+                      Enviar
                     </MDBBtn>
                   </div>
                 </form>

@@ -14,14 +14,16 @@ import {
   MDBContainer,
   MDBIcon,
 } from "mdbreact";
+import "./styles.css";
+import { Logo, Home } from "./styles";
+import { CounterCart } from "../counterCar/carCounter";
 import { DataContext } from "../../Context";
-
+import logo from "./Logo.png";
 class Navbar extends Component {
   static contextType = DataContext;
   state = {
     collapseID: "",
   };
-
   toggleCollapse = (collapseID) => () =>
     this.setState((prevState) => ({
       collapseID: prevState.collapseID !== collapseID ? collapseID : "",
@@ -31,15 +33,16 @@ class Navbar extends Component {
     const cont = this.context;
     return (
       <MDBNavbar
-        color="primary-color"
+        color="bgdegrad"
         dark
         expand="md"
         fixed="top"
         scrolling
         transparent>
         <MDBNavbarBrand>
-          <MDBNavLink className="waves-effect waves-light" to="/">
-            <strong className="white-text">Home</strong>
+          <MDBNavLink className="waves-effect waves-dark" to="/">
+            <Logo src={logo} />
+            <Home>Inicio</Home>
           </MDBNavLink>
         </MDBNavbarBrand>
         <MDBNavbarToggler onClick={this.toggleCollapse("navbarCollapse3")} />
@@ -51,11 +54,9 @@ class Navbar extends Component {
                   <MDBNavLink
                     className="waves-effect waves-light"
                     to="/products">
-                    <MDBIcon icon="joget" className="mr-1" />
-                    Productos
+                    <CounterCart />
                   </MDBNavLink>
                 </MDBNavItem>
-                <MDBNavItem></MDBNavItem>
                 <MDBNavItem>
                   <MDBDropdown>
                     <MDBDropdownToggle nav caret>
@@ -74,15 +75,15 @@ class Navbar extends Component {
             ) : (
               <React.Fragment>
                 <MDBNavItem>
-                  <MDBNavLink className="waves-effect waves-light" to="/login">
+                  <MDBNavLink className="waves-effect waves-darck" to="/login">
                     <MDBIcon icon="key" className="mr-1" />
-                    LogIn
+                    Iniciar sesión
                   </MDBNavLink>
                 </MDBNavItem>
                 <MDBNavItem>
-                  <MDBNavLink className="waves-effect waves-light" to="/SingUp">
+                  <MDBNavLink className="waves-effect waves-darck" to="/SingUp">
                     <MDBIcon icon="user-plus" className="mr-1" />
-                    SingUp
+                    Regístrate
                   </MDBNavLink>
                 </MDBNavItem>
               </React.Fragment>
@@ -93,5 +94,4 @@ class Navbar extends Component {
     );
   }
 }
-
 export default Navbar;

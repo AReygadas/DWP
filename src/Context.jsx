@@ -1,5 +1,5 @@
 //Clase que maneja las variables globales y el Session Storage
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 //Creo el contexto
 export const DataContext = createContext();
 //Funcion del contexto
@@ -42,17 +42,17 @@ export const DataProvider = ({ children }) => {
         //Cambia el estatus de logueo del usuario
         status = true;
         //Ventana modal con el mensaje de confirmacion
-        swal({
+        /*  swal({
           title: "Welcome!!",
           text: json.data.customer.full_name,
           icon: "info",
           buttons: "Ok",
-        });
+        }); */
       } else {
         //Enb caso de que la api mande mensaje de error regresa el modal de error
         swal({
           title: "Error",
-          text: "An error has occurred!! - " + json.error_code,
+          text: "An error has occurred !! - " + json.error_code,
           icon: "error",
           buttons: "Ok",
         });
@@ -65,7 +65,6 @@ export const DataProvider = ({ children }) => {
     //Actualiza el estatus de logueo del usuario
     setIsAuth(status);
   };
-
   //Hook para validar si se recordara al usuario
   const [IsChek, setIsChek] = useState(() => {
     if (window.localStorage.getItem("check") === null) {
@@ -74,7 +73,6 @@ export const DataProvider = ({ children }) => {
       return window.localStorage.getItem("check");
     }
   });
-
   //Hook para controlar el estado del usuario
   const [IsAuth, setIsAuth] = useState(() => {
     //Aqui actualizas el estado del usuario.
@@ -84,7 +82,6 @@ export const DataProvider = ({ children }) => {
       return sessionValidate();
     }
   });
-
   //Hook para controlar y tomar el nombre del usuario del SessionStorage
   const [name, setName] = useState(() => {
     //Regreso el valor del nombre del sessionStorage
@@ -94,8 +91,40 @@ export const DataProvider = ({ children }) => {
       return window.sessionStorage.getItem("full_name");
     }
   });
-
+  //Hook del state para controlar el producto seleccionado
+  const [itemId, setItemId] = useState("");
+  //Hook para controlar el contador de productos en el carrito
+  const [counter, setCounter] = useState(0);
   // Son la variables globales que vamos en la aplicacion
+
+  //Esta es la funcion que actualiza el carrito de compras y agrega el numero de items al icono
+  useEffect(async () => {
+    let data = {
+      session_id: window.localStorage.getItem("session_id"),
+    };
+    try {
+      let config = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+      let res = await fetch(
+        "http://35.167.62.109/storeutags/cart/get_details",
+        config
+      );
+      let json = await res.json();
+      console.log(json);
+      if (json.status === "success") {
+        setCounter(json.data.items_quantity);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
+  //estas son las variables y funciones que el usuario compartira de forma global
   const value = {
     //Variable del nombre de usuario
     name,
@@ -135,13 +164,23 @@ export const DataProvider = ({ children }) => {
         window.sessionStorage.removeItem("check");
       }
     },
+    //
     IsChek,
     acticateChek: (val) => {
       setIsChek(val);
       window.localStorage.setItem("check", val);
     },
+    //Aqui se guarda el id del item seleccionado en la pantalla de productos
+    itemId,
+    idProducto: (product_id) => {
+      setItemId(product_id);
+    },
+    //Esta variable controla el contador de items en el carrito
+    counter,
+    contador: (count) => {
+      setCounter(count);
+    },
   };
-
   //regresamos el Data Provider que envuelve a la aplicacion
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };

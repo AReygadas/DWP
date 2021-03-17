@@ -1,16 +1,15 @@
 //Importar paginas, componentes y dependencias
 import React, { Component } from "react";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 //Paginas
 import Layout from "./Layout";
-import Home from "./pages/Home";
 import SingUp from "./pages/SingUp";
 import RecuperaPass from "./pages/RecuperaCuenta";
 //Componentes
 import { DataContext } from "./Context";
 import { Login } from "./pages/LogIn";
-import EcommercePage from "./pages/ecomerce";
 import { Products } from "./pages/Products";
+import { Detail } from "./pages/Details/Detail";
 //Clase que controla la navegacion en la app
 class App extends Component {
   //Permite consumir el Context con los datos globales
@@ -31,8 +30,8 @@ class App extends Component {
           <BrowserRouter>
             <Layout>
               <Switch>
-                <Route exact path="/" component={EcommercePage} />
-                <Route exact path="/products" component={Products} />
+                <Route exact path="/" component={Products} />
+                <Route exact path="/detail" component={Detail} />
               </Switch>
             </Layout>
           </BrowserRouter>
@@ -43,8 +42,8 @@ class App extends Component {
                 <Route exact path="/recupera" component={RecuperaPass} />
                 <Route exact path="/SingUp" component={SingUp} />
                 <Route exact path="/login" component={Login} />
-
-                <Route exact path="/" component={Home} />
+                <Route exact path="/detail" component={Detail} />
+                <Route exact path="/" component={Products} />
                 {/* Pagina principal al cargar */}
               </Switch>
             </Layout>

@@ -1,12 +1,16 @@
-
 import React from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn, MDBCard, MDBCardBody } from 'mdbreact';
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBInput,
+  MDBBtn,
+  MDBCard,
+  MDBCardBody,
+} from "mdbreact";
 import ReCAPTCHA from "react-google-recaptcha";
 
 const FormPage = () => {
- 
-  
-
   return (
     <MDBContainer>
       <MDBRow>
@@ -16,7 +20,7 @@ const FormPage = () => {
               <form>
                 <p className="h4 text-center py-4">Registro</p>
                 <div className="grey-text">
-                  <MDBInput 
+                  <MDBInput
                     label="Nombre Completo"
                     icon="user"
                     group
@@ -34,7 +38,7 @@ const FormPage = () => {
                     error="wrong"
                     success="right"
                   />
-               <MDBInput
+                  <MDBInput
                     label="Estado"
                     icon="map"
                     group
@@ -43,7 +47,7 @@ const FormPage = () => {
                     error="wrong"
                     success="right"
                   />
-                <MDBInput
+                  <MDBInput
                     label="Ciudad"
                     icon="map-marker-alt"
                     group
@@ -76,15 +80,11 @@ const FormPage = () => {
                     validate
                   />
 
-                  <ReCAPTCHA
-                      sitekey="6LfUcjgaAAAAABlubDD75wuxfBUeiV9SS44JdZdF"
-                     
-                    />
-
+                  <ReCAPTCHA sitekey="6LfUcjgaAAAAABlubDD75wuxfBUeiV9SS44JdZdF" />
                 </div>
                 <div className="text-center py-4 mt-3">
                   <MDBBtn color="cyan" type="submit">
-                    Register
+                    Enviar
                   </MDBBtn>
                 </div>
               </form>

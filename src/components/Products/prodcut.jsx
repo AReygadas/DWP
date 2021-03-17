@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import {
-  MDBRow,
-  MDBCol,
   MDBCard,
   MDBCardImage,
   MDBCardBody,
@@ -10,6 +9,7 @@ import {
   MDBCardFooter,
   MDBTooltip,
 } from "mdbreact";
+import { DataContext } from "../../Context";
 
 export const Item = ({
   code,
@@ -20,15 +20,26 @@ export const Item = ({
   short_description,
   product_id,
 }) => {
+  const contxt = useContext(DataContext);
+  const history = useHistory();
+
+  const handleClick = () => {
+    contxt.idProducto(product_id);
+    console.log(product_id);
+    history.push("/detail");
+  };
+
   return (
     <React.Fragment>
       <div
         className="p-2 bd-highlight col-example"
-        style={{ maxWidth: "14em" }}>
+        style={{ maxWidth: "20em" }}>
         <MDBCard>
-          <MDBCardImage className="img-fluid" src={images_small} waves />
+          <div onClick={handleClick}>
+            <MDBCardImage className="img-fluid" src={images_small} waves />
+          </div>
           <MDBCardBody cascade className="text-center">
-            <a href="#!" className="text-muted">
+            <a className="text-muted">
               <h5>{category}</h5>
             </a>
             <MDBCardTitle>
@@ -44,11 +55,11 @@ export const Item = ({
               <span className="float-right">
                 <MDBTooltip domElement placement="top">
                   <i className="grey-text fa fa-eye mr-3" />
-                  <span>Quick Look</span>
+                  <span>Vistazo rápido</span>
                 </MDBTooltip>{" "}
                 <MDBTooltip domElement placement="top">
                   <i className="grey-text fa fa-cart-plus" />
-                  <span>Add to Whishlist</span>
+                  <span>Agragar al carito</span>
                 </MDBTooltip>
               </span>
             </MDBCardFooter>

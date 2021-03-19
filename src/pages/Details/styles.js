@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const Html_Details = styled.div`
-  color: white;
+  color: #000000;
+  font-size: 18px;
 `;
 export const Titulo2 = styled.h1`
   font-family: "Arial", Gadget, sans-serif;
@@ -30,9 +31,9 @@ export const Titulo3 = styled.h1`
 
 export const Parrafo = styled.p`
   font-family: "Arial", Gadget, sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   word-spacing: 2px;
-  color: #ffffff;
+  color: #000000;
   font-weight: normal;
   text-decoration: none;
   font-style: normal;
@@ -44,7 +45,7 @@ export const Presio = styled.h1`
   font-family: "Arial", Gadget, sans-serif;
   font-size: 24px;
   word-spacing: 2px;
-  color: #ffffff;
+  color: #000000;
   font-weight: normal;
   text-decoration: none;
   font-style: normal;
@@ -64,7 +65,7 @@ export const BtnCar = styled.button`
   border: 1px solid #eeb44f;
   display: inline-block;
   cursor: pointer;
-  color: #ffffff;
+  color: #000000;
   font-family: Arial;
   font-size: 15px;
   font-weight: bold;

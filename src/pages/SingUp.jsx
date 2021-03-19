@@ -28,31 +28,40 @@ export default class Home extends React.Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      let config = {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(this.state),
-      };
-      let res = await fetch(
-        "http://35.167.62.109/storeutags/security/create_account",
-        config
-      );
-      let json = await res.json();
+    if (Token != "") {
+      try {
+        let config = {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(this.state),
+        };
+        let res = await fetch(
+          "http://35.167.62.109/storeutags/security/create_account",
+          config
+        );
+        let json = await res.json();
+        swal({
+          title: "Usuario Registrado",
+          text: "Recibirás un correo con la confirmación del registro",
+          icon: "success",
+          buttons: "Aceptar",
+        }).then((respuesta) => {
+          window.location.href = "/";
+        });
+        console.log(json);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
       swal({
-        title: "Usuario Registrado",
-        text: "Recibirás un correo con la confirmación del registro",
-        icon: "success",
+        title: "Recapcha",
+        text: "Recaptcha no validado",
+        icon: "error",
         buttons: "Aceptar",
-      }).then((respuesta) => {
-        window.location.href = "/";
       });
-      console.log(json);
-    } catch (error) {
-      console.log(error);
     }
     console.log(this.state);
   };
@@ -71,6 +80,15 @@ export default class Home extends React.Component {
       ...this.state,
       [e.target.name]: e.target.value,
     });
+  };
+
+  callback = function () {
+    console.log("Done!!!!");
+  };
+
+  // Recibimos el token y almacenamos su respuesta en un estado con el hook useState.
+  verifyCallback = function (response) {
+    Token(response);
   };
 
   render() {
@@ -197,7 +215,11 @@ export default class Home extends React.Component {
                         validate
                         required
                       />
-                      <ReCAPTCHA sitekey="6LfUcjgaAAAAABlubDD75wuxfBUeiV9SS44JdZdF" />
+                      <ReCAPTCHA
+                        sitekey="6LfUcjgaAAAAABlubDD75wuxfBUeiV9SS44JdZdF"
+                        /* verifyCallback={verifyCallback}
+                        onloadCallback={callback} */
+                      />
                       ,
                     </div>
                     <div className="text-center py-4 mt-3">

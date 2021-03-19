@@ -19,7 +19,7 @@ export const Title = styled.h1`
 `;
 export const SubTitle1 = styled.h2`
   font-family: "Arial Black", Gadget, sans-serif;
-  font-size: 20px;
+  font-size: 26px;
   letter-spacing: 2px;
   word-spacing: 2px;
   color: #000000;
@@ -31,7 +31,7 @@ export const SubTitle1 = styled.h2`
 `;
 export const Span1 = styled.span`
   line-height: 1.54;
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-family: inherit;
   color: #000000;
 `;
@@ -73,4 +73,58 @@ export const Lista = styled.ul`
 `;
 export const Elemento = styled.li`
   float: left;
+`;
+
+export const Buscar = styled.input`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  background: #2f3640;
+  height: 40px;
+  border-radius: 40px;
+  padding: 10px;
+
+  &:hover > .searchInput {
+    width: 240px;
+    padding: 0 6px;
+  }
+
+  .searchBox:hover > .searchButton {
+    background: white;
+    color: #2f3640;
+  }
+
+  .searchButton {
+    color: white;
+    float: right;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #2f3640;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+  }
+
+  .searchInput {
+    border: none;
+    background: none;
+    outline: none;
+    float: left;
+    padding: 0;
+    color: white;
+    font-size: 16px;
+    transition: 0.4s;
+    line-height: 40px;
+    width: 0px;
+  }
+
+  @media screen and (max-width: 620px) {
+    .searchBox:hover > .searchInput {
+      width: 150px;
+      padding: 0 6px;
+    }
+  }
 `;

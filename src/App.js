@@ -8,7 +8,7 @@ import RecuperaPass from "./pages/RecuperaCuenta";
 //Componentes
 import { DataContext } from "./Context";
 import { Login } from "./pages/LogIn";
-import { Products } from "./pages/Products";
+import { Products } from "./pages/Productos/Products";
 import { Detail } from "./pages/Details/Detail";
 //Clase que controla la navegacion en la app
 class App extends Component {

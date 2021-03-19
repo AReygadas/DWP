@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { MDBCol, MDBContainer, MDBRow, MDBCardGroup, MDBInput } from "mdbreact";
-import { Item } from "../components/Products/prodcut";
+import { Item } from "../../components/Products/prodcut";
 import {
   Lista,
   Elemento,
@@ -10,7 +10,7 @@ import {
   Span1,
   Searching,
   Aviso,
-} from "./styles";
+} from "../styles";
 export const Products = () => {
   const [itemsS, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

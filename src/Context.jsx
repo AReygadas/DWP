@@ -4,7 +4,6 @@ import React, { createContext, useState, useEffect } from "react";
 export const DataContext = createContext();
 //Funcion del contexto
 export const DataProvider = ({ children }) => {
-  // llamada al ping de la API
   const sessionValidate = async (e) => {
     let status = false; // Controla el estatus de logueo del usuario
     //asigno a una variable la session del Session Storage
@@ -124,6 +123,8 @@ export const DataProvider = ({ children }) => {
       console.log(error);
     }
   });
+  // llamada al ping de la API
+
   //estas son las variables y funciones que el usuario compartira de forma global
   const value = {
     //Variable del nombre de usuario

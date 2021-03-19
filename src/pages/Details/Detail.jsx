@@ -21,7 +21,6 @@ export const Detail = () => {
   const [details, setDetails] = useState([]); //aqui almacenamos toda el json de la respuesta del servidor
   const [cantidad, setCantidad] = useState(1); // este state controla la cantidad que podemos comprar del mismo producto
   const [image, setImage] = useState("");
-  const [emptyCar, setCar] = useState("");
   const hist = useHistory(); //asignamos el useHistory a una variable que podamos consumir
 
   //funcion de control de carga y estado de la aplicaciondonde hacemos la peticion al servidor de los detalles del producto
@@ -32,7 +31,6 @@ export const Detail = () => {
         "http://35.167.62.109/storeutags/catalogs/item_details/" + contxt.itemId
       );
       console.log(result);
-
       setDetails(result.data.data.items);
       setIsLoading(false);
       console.log(details);
@@ -41,49 +39,6 @@ export const Detail = () => {
   }, [
     "http://35.167.62.109/storeutags/catalogs/item_details/" + contxt.itemId,
   ]);
-  //eliminar productos del carrito
-  const deleteItems = async (e) => {
-    // let es para declarar variables
-
-    let user = {
-      session_id: window.localStorage.getItem("session_id"),
-    };
-    try {
-      //Configuracion de la peticion
-      let config = {
-        method: "DELETE", //Metodo de peticion
-        headers: {
-          //Los headers de la peticion que no cambian
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        //Los datos en json que pide la API
-        body: JSON.stringify(user),
-      };
-      //La llamada a la Api
-      let res = await fetch(
-        "http://35.167.62.109/storeutags/cart/remove_all",
-        config
-      );
-      //Atrapamos la respuesta de la api
-      let json = await res.json();
-      console.log("AAAAA" + res);
-      if (json.status === "success") {
-        //Imprimimos en consola el Json
-        console.log(json);
-        //Utilizamos las variables globales para autenticar al usuario
-        // y guardar la sesion en sessionStorage
-        setCar("A");
-      }
-    } catch (error) {
-      //Atrapamos los errores que no controla la api
-      console.log(error);
-    }
-  };
-  //Verificar si la cuenta debe ser recordada
-  const chek0 = (e) => {
-    aut.acticateChek(e.target.checked);
-  };
   //funcion que actualiza la cantidad cada vez que cambiamos el input de cantidad
   const hancleChange = (e) => {
     setCantidad(e.target.value);
@@ -92,7 +47,6 @@ export const Detail = () => {
   const handleClick = async (e) => {
     if (contxt.IsAuth) {
       //si esta autenticado agraga el producto
-      e.preventDefault();
       let data = {
         session_id: window.localStorage.getItem("session_id"),
         item_id: contxt.itemId,
@@ -113,12 +67,14 @@ export const Detail = () => {
         );
         let json = await res.json();
         console.log(json);
+
         if (json.status === "success") {
+          contxt.contador(9);
           swal({
-            title: "Item add",
-            text: "Item add to cart !!",
+            title: "Agregado",
+            text: "Producto agregado al carrito !!",
             icon: "success",
-            buttons: "OK",
+            buttons: "Continuar",
           }).then((respuesta) => {
             hist.push("/");
           });
@@ -128,16 +84,51 @@ export const Detail = () => {
             text: "Code not found !! " + json.error_code,
             icon: "error",
             buttons: "OK",
-          }).then((respuesta) => {});
+          });
         }
       } catch (error) {
         console.log(error);
       }
-      contxt.contador(0);
     } else {
       //si no esta autenticado nos manda al loguin
       hist.push("/login");
     }
+    contxt.contador(0);
+  };
+  const ItemDelete = async (e) => {
+    //si esta autenticado agraga el producto
+    let data = {
+      session_id: window.localStorage.getItem("session_id"),
+    };
+    try {
+      let config = {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+      let res = await fetch(
+        "http://35.167.62.109/storeutags/cart/remove_all",
+        config
+      );
+      let json = await res.json();
+      console.log(json);
+      if (json.status === "success") {
+        hist.push("/");
+      } else {
+        swal({
+          title: "Error",
+          text: "Code not found !! " + json.error_code,
+          icon: "error",
+          buttons: "OK",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    contxt.contador(0);
   };
   //variable que controla la imagen que se muestra
   const handleImage = (e) => {
@@ -207,7 +198,7 @@ export const Detail = () => {
                 <br /> <br />
                 <BtnCar>Comprar Ahora</BtnCar>
                 <br /> <br />
-                <BtnCar onClick={deleteItems}>Borrar Carrito</BtnCar>
+                <BtnCar onClick={ItemDelete}>Eliminar carrito</BtnCar>
               </MDBCol>
             </MDBRow>
           </div>

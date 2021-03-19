@@ -21,6 +21,7 @@ export const Detail = () => {
   const [details, setDetails] = useState([]); //aqui almacenamos toda el json de la respuesta del servidor
   const [cantidad, setCantidad] = useState(1); // este state controla la cantidad que podemos comprar del mismo producto
   const [image, setImage] = useState("");
+  const [emptyCar, setCar] = useState("");
   const hist = useHistory(); //asignamos el useHistory a una variable que podamos consumir
 
   //funcion de control de carga y estado de la aplicaciondonde hacemos la peticion al servidor de los detalles del producto
@@ -40,6 +41,49 @@ export const Detail = () => {
   }, [
     "http://35.167.62.109/storeutags/catalogs/item_details/" + contxt.itemId,
   ]);
+  //eliminar productos del carrito
+  const deleteItems = async (e) => {
+    // let es para declarar variables
+
+    let user = {
+      session_id: window.localStorage.getItem("session_id"),
+    };
+    try {
+      //Configuracion de la peticion
+      let config = {
+        method: "DELETE", //Metodo de peticion
+        headers: {
+          //Los headers de la peticion que no cambian
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        //Los datos en json que pide la API
+        body: JSON.stringify(user),
+      };
+      //La llamada a la Api
+      let res = await fetch(
+        "http://35.167.62.109/storeutags/cart/remove_all",
+        config
+      );
+      //Atrapamos la respuesta de la api
+      let json = await res.json();
+      console.log("AAAAA" + res);
+      if (json.status === "success") {
+        //Imprimimos en consola el Json
+        console.log(json);
+        //Utilizamos las variables globales para autenticar al usuario
+        // y guardar la sesion en sessionStorage
+        setCar("A");
+      }
+    } catch (error) {
+      //Atrapamos los errores que no controla la api
+      console.log(error);
+    }
+  };
+  //Verificar si la cuenta debe ser recordada
+  const chek0 = (e) => {
+    aut.acticateChek(e.target.checked);
+  };
   //funcion que actualiza la cantidad cada vez que cambiamos el input de cantidad
   const hancleChange = (e) => {
     setCantidad(e.target.value);
@@ -162,6 +206,8 @@ export const Detail = () => {
                 <BtnCar onClick={handleClick}>Agregar al carrito</BtnCar>
                 <br /> <br />
                 <BtnCar>Comprar Ahora</BtnCar>
+                <br /> <br />
+                <BtnCar onClick={deleteItems}>Borrar Carrito</BtnCar>
               </MDBCol>
             </MDBRow>
           </div>

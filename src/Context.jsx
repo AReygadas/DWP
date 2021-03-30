@@ -9,7 +9,6 @@ export const DataProvider = ({ children }) => {
     //asigno a una variable la session del Session Storage
     let id;
     if (IsChek) {
-      console.log(IsChek);
       id = { session_id: window.localStorage.getItem("session_id") };
     } else {
       console.log(IsChek);
@@ -35,7 +34,7 @@ export const DataProvider = ({ children }) => {
       //Recibes la respuesta del fetch con los datos.
       let json = await res.json();
       //Imprime Json en consola
-      console.log(json);
+
       // Valida si la respuesta fue exitosa
       if (json.status === "success") {
         //Cambia el estatus de logueo del usuario
@@ -115,8 +114,9 @@ export const DataProvider = ({ children }) => {
         config
       );
       let json = await res.json();
-      console.log(json);
+      //console.log(json);
       if (json.status === "success") {
+        console.log(json.data.items_quantity);
         setCounter(json.data.items_quantity);
       }
     } catch (error) {

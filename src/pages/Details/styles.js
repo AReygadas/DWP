@@ -21,7 +21,7 @@ export const Titulo3 = styled.h1`
   font-size: 24px;
   letter-spacing: 2px;
   word-spacing: 2px;
-  color: #3fbfbf;
+  color: #000000;
   font-weight: normal;
   text-decoration: none;
   font-style: normal;
@@ -83,4 +83,10 @@ export const Miniatura = styled.img`
   width: 120%;
   border-radius: 12px;
   margin-bottom: 10px;
+`;
+
+export const Fondo = styled.div`
+  margin-top: 7px;
+  padding: 15px;
+  background-color: RGBA(250, 250, 250, 0.5);
 `;

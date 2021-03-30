@@ -10,6 +10,7 @@ import { DataContext } from "./Context";
 import { Login } from "./pages/LogIn";
 import { Products } from "./pages/Productos/Products";
 import { Detail } from "./pages/Details/Detail";
+import { CarItem } from "./pages/Car/Carrito";
 //Clase que controla la navegacion en la app
 class App extends Component {
   //Permite consumir el Context con los datos globales
@@ -32,6 +33,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={Products} />
                 <Route exact path="/detail" component={Detail} />
+                <Route exact path="/carrito" component={CarItem} />
               </Switch>
             </Layout>
           </BrowserRouter>

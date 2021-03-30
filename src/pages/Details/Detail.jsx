@@ -12,6 +12,7 @@ import {
   Cantidad,
   Miniatura,
   Titulo2,
+  Fondo,
 } from "./styles"; //importamos los estilos personalizados de los componentes del styles.js
 import swal from "sweetalert"; //nos permite lanzar alertas en formna de modal ya estilizadas
 
@@ -141,6 +142,8 @@ export const Detail = () => {
   return (
     <React.Fragment>
       <br />
+      <br />
+      <br />
       <MDBRow center>
         <Titulo2>Detalles del Producto</Titulo2>
       </MDBRow>
@@ -174,25 +177,29 @@ export const Detail = () => {
               </MDBCol>
               {/* aqui se muestra el titulo y la descripcon del producto */}
               <MDBCol md="5">
-                <Titulo3>{it.short_description}</Titulo3>
-                <Parrafo>{it.long_description}</Parrafo>
-                {/* Aqui se pinta el html del detalle a traves de    dangerouslySetInnerHTM  */}
-                <Html_Details
-                  dangerouslySetInnerHTML={{
-                    __html: it.html_details,
-                  }}></Html_Details>
+                <Fondo>
+                  <Titulo3>{it.short_description}</Titulo3>
+                  <Parrafo>{it.long_description}</Parrafo>
+                  {/* Aqui se pinta el html del detalle a traves de    dangerouslySetInnerHTM  */}
+                  <Html_Details
+                    dangerouslySetInnerHTML={{
+                      __html: it.html_details,
+                    }}></Html_Details>
+                </Fondo>
               </MDBCol>
               {/* Esta columna muestra la cantidad, presio y botones del producto */}
               <MDBCol md="2">
-                <Presio>$ {it.price * cantidad}</Presio>
-                <Html_Details>Cantidad</Html_Details>
-                <Cantidad
-                  type="number"
-                  name=""
-                  value={cantidad}
-                  id=""
-                  onChange={hancleChange}
-                />
+                <Fondo>
+                  <Presio>$ {it.price * cantidad}</Presio>
+                  <Html_Details>Cantidad</Html_Details>
+                  <Cantidad
+                    type="number"
+                    name=""
+                    value={cantidad}
+                    id=""
+                    onChange={hancleChange}
+                  />
+                </Fondo>
                 <br /> <br />
                 <BtnCar onClick={handleClick}>Agregar al carrito</BtnCar>
                 <br /> <br />

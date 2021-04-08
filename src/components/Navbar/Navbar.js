@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   MDBNavbar,
   MDBNavbarBrand,
@@ -13,20 +13,20 @@ import {
   MDBDropdownItem,
   MDBContainer,
   MDBIcon,
-} from "mdbreact";
-import "./styles.css";
-import { Logo, Home } from "./styles";
-import { CounterCart } from "../counterCar/carCounter";
-import { DataContext } from "../../Context";
-import logo from "./Logo.png";
+} from 'mdbreact';
+import './styles.css';
+import { Logo, Home } from './styles';
+import { CounterCart } from '../counterCar/carCounter';
+import { DataContext } from '../../Context';
+import logo from './Logo.png';
 class Navbar extends Component {
   static contextType = DataContext;
   state = {
-    collapseID: "",
+    collapseID: '',
   };
   toggleCollapse = (collapseID) => () =>
     this.setState((prevState) => ({
-      collapseID: prevState.collapseID !== collapseID ? collapseID : "",
+      collapseID: prevState.collapseID !== collapseID ? collapseID : '',
     }));
 
   render() {
@@ -45,7 +45,7 @@ class Navbar extends Component {
             <Home>Inicio</Home>
           </MDBNavLink>
         </MDBNavbarBrand>
-        <MDBNavbarToggler onClick={this.toggleCollapse("navbarCollapse3")} />
+        <MDBNavbarToggler onClick={this.toggleCollapse('navbarCollapse3')} />
         <MDBCollapse id="navbarCollapse3" isOpen={this.state.collapseID} navbar>
           <MDBNavbarNav right>
             {cont.IsAuth ? (
@@ -64,7 +64,11 @@ class Navbar extends Component {
                       {cont.name}
                     </MDBDropdownToggle>
                     <MDBDropdownMenu className="dropdown-default" right>
-                      <MDBDropdownItem href="#!">Mi cuenta</MDBDropdownItem>
+                      <MDBNavLink
+                        className="waves-effect waves-light"
+                        to="/pedidos">
+                        <MDBDropdownItem>Mis Pedidos</MDBDropdownItem>
+                      </MDBNavLink>
                       <MDBDropdownItem onClick={cont.removeAuth}>
                         Cerrar Sesion
                       </MDBDropdownItem>

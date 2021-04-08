@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import { CItem } from "../../components/CarritoItem/Citem";
-import { MDBCol, MDBRow } from "mdbreact";
-import { Resumen, Detalle, Fondo } from "./styles";
+import { MDBBtn, MDBCol, MDBRow } from "mdbreact";
+import { Resumen, Detalle, Fondo, BtnCar } from "./styles";
 import { DataContext } from "../../Context";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 export const CarItem = () => {
   const [detalles, setDetalles] = useState([]);
@@ -91,6 +91,12 @@ export const CarItem = () => {
                 <FormatNumber number={compra.taxes} />
                 <FormatNumber number={compra.total} />
               </MDBCol>
+            </MDBRow>
+            <br />
+            <MDBRow center>
+              <Link to="/checkout">
+                <BtnCar>Proceder al pago</BtnCar>
+              </Link>
             </MDBRow>
           </Fondo>
         </MDBCol>
